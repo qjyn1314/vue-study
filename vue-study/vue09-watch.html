@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-监听属性</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项
+        el: '#app',
+        data() {
+            return {
+                message: 'Vue 监听属性',
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

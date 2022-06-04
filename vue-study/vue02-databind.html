@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-数据绑定</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    v-bind / : = 仅单向绑定，即vue单向赋予元素绑定的值。
+    <br/>
+    v-model = 双向绑定，即vue赋予元素中的值，元素中的值也可以实时更改到vue的字段中。
+    <hr/>
+    单向数据绑定：
+    <label>
+        <input type="text" v-bind:value="name">
+    </label>
+    <hr/>
+    双向数据绑定：
+    <label>
+        <input type="text" v-model:value="name">
+    </label>
+
+    <hr/>
+    简写：
+    <hr/>
+    单向数据绑定：v-bind -> :
+    <label>
+        <input type="text" :value="messageName">
+    </label>
+    <hr/>
+    双向数据绑定：v-model:value  -> v-model
+    <label>
+        <input type="text" v-model="messageName">
+    </label>
+    <hr/>
+    数据绑定有两种方式：
+    <br/>
+    说明：双向绑定一般都应用在表单类元素上（如：input、select等）
+    <br/>
+    v-model:value 可以简写为v-model，因为v-model默认手机的是value的值。
+    <br/>
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const app = new Vue({
+        // 选项
+        el: '#app',
+        data: {
+            message: '数据绑定',
+            name: '张三',
+            messageName: '张三',
+        }
+    })
+</script>
+
+</body>
+</html>

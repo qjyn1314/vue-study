@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-计算属性</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <h2>v-model-插值语法实现：</h2>
+    <br>
+    <input type="text" v-model="surname">
+    <br>
+    <input type="text" v-model="name">
+    <br>
+    姓名：<span>{{surname + '-' + name}}</span>
+    全名：<span>{{surname}}-{{name}}</span>
+    <hr/>
+    <h2>methods-语法实现：</h2>
+    <br>
+    <input type="text" v-model="surname">
+    <br>
+    <input type="text" v-model="name">
+    <br>
+    methods-全名：<span>{{fullName()}}</span>
+    <hr/>
+    <h2>computed-语法实现：</h2>
+    <br>
+    <input type="text" v-model="surname">
+    <br>
+    <input type="text" v-model="name">
+    <br>
+    computed-全名：<span>{{fullNames}}</span>
+    <hr/>
+    计算属性：
+    <br/>
+    定义：要用的属性不存在，要通过已有的 data中的属性-计算得来
+    <br/>
+    原理：底层借助了Object.definsProperty方法提供的getter和setter
+    <br/>
+    get函数在什么时候执行：
+    1、初次读取 fullNames，2、所依赖的数据发生变化时，也会改变。
+    <br/>
+    优势：与methods方式相比，内部有缓存机制，效率更高，调试方便
+    <br/>
+    说明：
+    <br/>
+    1、 计算属性最终会出现在vm上，直接读取使用即可。
+    <br/>
+    2、如果计算属性需要被修改，那么必须重写set函数去响应修改，且set中要引起计算时依赖的数据发生改变
+    <br/>
+    <hr/>
+    <hr/>
+    <h2>computed-简单语法实现，前提是当前的计算属性是只读，且没有需求对该计算属性的修改</h2>
+    <br>
+    <input type="text" v-model="surname">
+    <br>
+    <input type="text" v-model="name">
+    <br>
+    computed-全名：<span>{{fullNamesGet}}</span>
+    <hr/>
+    <hr/>
+
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项
+        el: '#app',
+        data() {
+            return {
+                message: 'Vue 计算属性-将姓和名-组装成  姓-名 ',
+                surname: '张',
+                name: '三',
+            }
+        },
+        methods: {
+            fullName() {
+                return this.surname + '-' + this.name;
+            }
+        },
+        computed: {
+            fullNames: {
+                //完整写法：
+                //此处的get有两个时机在调用：
+                //当有人读取了fullNames时，get就会被调用，且返回值就作为fullNames的值
+                //1、初次读取 fullNames，2、所依赖的数据发生变化时，也会改变。
+                get() {
+                    return this.surname + '-' + this.name;
+                },
+                set(value) {
+                    console.log("set", value);
+                    const val = value.split("-");
+                    this.surname = val[0];
+                    this.name = val[1];
+                }
+            },
+            fullNamesGet() {
+                //简单写法：
+                return this.surname + '-' + this.name;
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

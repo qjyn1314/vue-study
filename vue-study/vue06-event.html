@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-鼠标事件 和 键盘事件</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        * {
+            margin-top: 20px;
+        }
+
+        .event_class {
+            padding: 10px;
+            height: 100px;
+            background-color: skyblue;
+        }
+
+        .div2 {
+            height: 50px;
+            background-color: orange;
+        }
+
+        .list {
+            height: 500px;
+            background-color: coral;
+            overflow: auto;
+        }
+
+        li {
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<!--此处包含了 鼠标事件 和 键盘事件。-->
+<div id="app">
+    <h1>{{ mouse_message }}</h1>
+    <button @click="showInfo">点我后进行提示（不传参）</button>
+    <button @click="showInfoTwo($event,123)">点我后进行提示（传参）</button>
+    <hr/>
+    click事件简单写法：
+    <br/>
+    v-on:click -> @click
+    <hr/>
+    @click.prevent -> 阻止默认事件（阻止a标签的跳转事件。）
+    <a href="https://www.baidu.com" @click.prevent="showInfoThree">点击我在提示之后不进行跳转。</a>
+    <hr/>
+    @click.stop -> 阻止事件冒泡
+    <div class="event_class" @click="showInfoThree($event,'div盒子的click事件')">
+        <button @click.stop="showInfoThree($event,'button按钮的click事件-阻止事件冒泡，父级元素的click-不会执行，效果为不会弹框两次')">点击我进行提示信息。
+        </button>
+    </div>
+    <hr/>
+    @click.once -> 事件仅执行一次
+    <div class="event_class" @click="showInfoThree($event,'div盒子的click事件')">
+        <button @click.once="showInfoThree($event,'button按钮的click事件')">点击我进行提示信息。</button>
+    </div>
+    @click.capture -> 使用事件的捕获模式,在捕获阶段就执行该方法。在此处实现的目标是先打印div1的传参，然后再打印div2的传参
+    <div class="event_class" @click.capture="showInfoThree($event,'div1盒子的click事件')">
+        div1
+        <div class="div2" @click="showInfoThree($event,'div2盒子的click事件')">
+            div2
+        </div>
+    </div>
+    @click.self -> 只有event.target是当前操作元素的时候才触发该事件
+    <div class="event_class" @click.self="showInfoThree($event,'div1盒子的click事件')">
+        div1
+        <div class="div2" @click.self="showInfoThree($event,'div2盒子的click事件')">
+            div2
+        </div>
+    </div>
+    @click.passive -> 事件的默认行为立即执行，无需等待事件回调执行完毕。即在调用方法的时候会执行很多程序的时候，导致页面卡顿，可以使用此函数。
+    <hr/>
+    @scroll -> 滚动条的滚动事件
+    @wheel -> 鼠标滚动轮的滚动事件
+    这两个事件的区别是什么？
+    <ul @wheel.passive="scrollBar" class="list">
+        <li>
+            0
+        </li>
+        <hr/>
+        <li>
+            1
+        </li>
+        <hr/>
+        <li>
+            2
+        </li>
+        <hr/>
+        <li>
+            3
+        </li>
+        <hr/>
+        <li>
+            4
+        </li>
+    </ul>
+    <hr/>
+    修饰符可以连续写：例如，@click.stop.prevent 效果为，停止了默认事件，停止了冒泡。
+    <hr/>
+    <h1>{{ keyboard_message }}</h1>
+    <h2>@keyup 和 @keydown</h2>
+    按下回车键后给予提示输出：
+    <input type="text" placeholder="按下回车键后给予提示输出。" @keyup.enter="showInfoByKeyup">
+    <hr/>
+    vue中常用的按键别名：
+    回车--enter 、
+    删除--delete （捕获删除键、退格键）、
+    退出--esc 、
+    空格--space 、
+    换行--tag 、
+    上--up 、
+    下--down 、
+    左--left 、
+    右--right 、
+    <hr/>
+    如果是按键是由两个单次组成的，例如：大小写切换-CapsLock，撸代码时：@keyup.caps-lock
+    <hr/>
+    tab 、必须配合 @keydown进行使用
+    <hr/>
+    ctrl、alt、shift、meta 键：
+    <hr/>
+    1、配合 keyup 使用，按下修饰键的同时，再按下其他键，随后释放其他键，事件才被触发。
+    <hr/>
+    2、配合 keydown 使用，正常触发事件。
+    <hr/>
+    进行测试：
+    <input type="text" placeholder="按下回车键后给予提示输出按键的key和keyCode。" @keyup="showInfoByKeyup">
+    <br>
+    <br>
+    <br>
+    可以使用 Vue.config.keyCodes.自定义键名 = 键码 ，可以定制别名。
+    <hr/>
+    修饰符：@keyup.ctrl.y 表示 同时按下Ctrl+Y键才可以触发该事件。
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项
+        el: '#app',
+        // 数据
+        data() {
+            return {
+                mouse_message: '鼠标事件',
+                keyboard_message: '键盘事件',
+
+            }
+        },
+        // 方法
+        methods: {
+            showInfo(event) {
+                // event 事件对象
+                // this 为当前 vue实例对象
+                console.log(this)
+                console.log(this === vm)
+                console.log(event.target)
+                alert("showInfo-的提示信息!")
+            },
+            showInfoTwo(event, num) {
+                console.log(event)
+                console.log(this)
+                console.log(num)
+                alert("showInfoTwo-的提示信息！！！！-传参为-" + num)
+            },
+            showInfoThree(event, info) {
+                console.log(event)
+                console.log(this)
+                console.log(info)
+                alert("showInfoThree-的提示信息！！！！-" + info)
+            },
+            scrollBar() {
+                // for (let i = 0; i < 20000; i++) {
+                //     console.log(i);
+                // }
+                console.log("我累坏啦，怎么到现在才开始执行我。")
+            },
+            showInfoByKeyup(e) {
+                console.log(e.key, e.keyCode)
+                console.log('值：', e.target.value)
+                console.log(Vue.config.keyCodes)
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

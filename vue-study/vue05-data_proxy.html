@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-数据代理</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <h2>{{ name }}</h2>
+    <h3>{{ age }}</h3>
+    <h3>address = ={{ address }}</h3>
+    <h3><a v-bind:href="url">点击我即可跳转至百度首页。</a></h3>
+    <h3><a :href="url">点击我即可跳转至百度首页。</a></h3>
+    <h1>数据代理的学习：Object.defineProperty(对象，新字段)</h1>
+    <h1>其vue实例对象“vm”中使用的是 数据代理对象，即vm中有对所有字段对应的get、set方法</h1>
+
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项
+        el: '#app',
+        data() {
+            return {
+                message: 'Vue Hello World!!!',
+                name: '张三',
+                age: 25,
+                url: 'https://www.baidu.com',
+                address: '天通苑南站'
+            }
+        }
+    })
+    console.log(vm)
+    let num = 18;
+
+    let person = {
+        name: '张三',
+        sex: '男'
+    }
+    // 数据代理的使用
+    Object.defineProperty(person, 'age', {
+        // value: num,
+        // enumerable: true, // 控制属性是否可以枚举，默认值是false,
+        //                   // 即在循环此对象获取值时，能不能获取到此字段
+        // writable: true, // 控制属性是否可以被修改，默认值是false
+        // configurable: true, // 控制属性是否可以被删除，默认值是false
+        get() {
+            console.log("有人读取了person的get方法")
+            return num;
+        },
+        set(value) {
+            console.log("有人设置了person的age属性")
+            num = value;
+        }
+    });
+
+    console.log(person)
+
+</script>
+
+</body>
+</html>

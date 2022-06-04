@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-模型</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <h2>{{ name }}</h2>
+    <h3>{{ age }}</h3>
+    <h3><a v-bind:href="url">点击我即可跳转至百度首页。</a></h3>
+    <h3><a :href="url">点击我即可跳转至百度首页。</a></h3>
+
+    <hr>
+    M:model-模型 即接口中的数据
+    <hr>
+    V:view-模板 即html页面中的dom对象。
+    <hr>
+    包含了 dom listener（监听）、data binding（绑定） 、
+    <hr>
+    VM:视图模型 即vue实例对象
+    <hr>
+    只要在vue实例中的数据都可以在页面中使用
+    <h1>
+        $emit== {{$emit}}
+    </h1>
+    <h1>
+        _c== {{_c}}
+    </h1>
+
+</div>
+
+<script>
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const app = new Vue({
+        // 选项
+        el: '#app',
+        data() {
+            return {
+                message: 'Vue Hello World!!!',
+                name: '张三',
+                age: 25,
+                url: 'https://www.baidu.com'
+            }
+        }
+    })
+    console.log(app)
+</script>
+
+</body>
+</html>
