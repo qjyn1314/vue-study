@@ -9,9 +9,24 @@
 
 <div id="app">
     <h1>{{ message }}</h1>
+    <h2>今天天气怎么样? ->{{info}}</h2>
+    <button @click="changeWeather">切换天气--方法</button>
+    <br/>
+    <hr/>
+    <button @click="isHot = !isHot">切换天气--简写表达式</button>
+    <br/>
+    <hr/>
+    <h3>绑定事件的时候: @xxx="yyy" yyy可以写一些简单的语句</h3>
+    <h2>监视属性watch:</h2>
+    <h3>1.被监视的属性变化时,回调函数自动调用,进行相关操作</h3>
+    <h3>2.监视的属性必须存在,才能监视</h3>
+    <h3>3.监视属性的两种写法:</h3>
+    <h4>在new Vue(){}中传入watch的配置</h4>
+    <h4>通过 vue实例对象(vm).$watch('属性名/计算属性名', {oldValue,newValue}) 进行监视</h4>
 </div>
 
 <script>
+    // 阻止 vue 在启动的时候生成生产提示
     Vue.config.productionTip = false;
     // let 变量； const 常量；
     const vm = new Vue({
@@ -20,9 +35,47 @@
         data() {
             return {
                 message: 'Vue 监听属性',
+                isHot: true
+            }
+        },
+        computed: {
+            info() {
+                return this.isHot ? "热" : "冷";
+            }
+        },
+        methods: {
+            changeWeather() {
+                this.isHot = !this.isHot;
+            }
+        },
+        //监视的正常写法, 在创建vue实例的时候已经知道了需要监视谁,所以直接在此处写逻辑,
+        watch: {
+            //此处可以监视 正常属性(isHot), 也可以监听 计算属性(info)
+            isHot: {
+                // 初始化时,让 handler 调用一下, 拿到当前的值
+                immediate: true,
+                // 当前isHot发生改变的时候触发
+                handler(newValue, oldValue) {
+                    console.log("isHot-发生了改变")
+                    console.log("新值-" + newValue)
+                    console.log("旧值-", oldValue)
+                }
             }
         }
     })
+
+    // 在创建vue实例的时候,不知道需不需要执行监视, 发现在创建实例之后需要监视, 则采用这种写法.
+    vm.$watch('isHot', {
+        // 初始化时,让 handler 调用一下, 拿到当前的值
+        immediate: true,
+        // 当前isHot发生改变的时候触发
+        handler(newValue, oldValue) {
+            console.log("isHot-发生了改变")
+            console.log("新值-" + newValue)
+            console.log("旧值-", oldValue)
+        }
+    });
+
 </script>
 
 </body>
