@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-监听属性</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <h2>今天天气怎么样? ->{{info}}</h2>
+    <button @click="changeWeather">切换天气--方法</button>
+    <br/>
+    <hr/>
+    <button @click="isHot = !isHot">切换天气--简写表达式</button>
+    <br/>
+    <hr/>
+    <h3>绑定事件的时候: @xxx="yyy" yyy可以写一些简单的语句</h3>
+    <h2>监视属性watch:</h2>
+    <h3>1.被监视的属性变化时,回调函数自动调用,进行相关操作</h3>
+    <h3>2.监视的属性必须存在,才能监视</h3>
+    <h3>3.监视属性的两种写法:</h3>
+    <h4>1.在new Vue(){}中传入watch的配置</h4>
+    <h4>2.通过 vue实例对象(vm).$watch('属性名/计算属性名', {oldValue,newValue}) 进行监视</h4>
+    <hr/>
+    <hr/>
+    <h2>深度监视属性:</h2>
+    <h3>numbers.a的值是:{{numbers.a}}</h3>
+    <br/>
+    <button @click="changeAValue">点我后 a的值 +1</button>
+    <hr/>
+    <h3>numbers.b的值是:{{numbers.b}}</h3>
+    <br/>
+    <button @click="changeBValue">点我后 b的值 +1</button>
+    <br/>
+    <h2>深度监视-watch:{deep:true}-说明:</h2>
+    <h3>1.vue中的watch默认不监测对象内部值的改变(一层)</h3>
+    <h3>2.在watch语句块中,配置了 deep:true 后,可以监测对象内部值的改变(多层结构)</h3>
+    <h2>备注:</h2>
+    <h3>vue自身可以监测对象内部值的改变,但是vue提供的watch默认不可以监测</h3>
+    <h3>使用watch时根据实际数据的具体结构,决定是否采用深度监视.</h3>
+    <br/>
+</div>
+
+<script>
+    // 阻止 vue 在启动的时候生成生产提示
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项
+        el: '#app',
+        data() {
+            return {
+                message: 'Vue 监听属性',
+                isHot: true,
+                numbers: {
+                    a: 1,
+                    b: 1
+                },
+                isFlag: false
+            }
+        },
+        computed: {
+            info() {
+                return this.isHot ? "热" : "冷";
+            }
+        },
+        methods: {
+            changeWeather() {
+                this.isHot = !this.isHot;
+            },
+            changeAValue() {
+                this.numbers.a++;
+            },
+            changeBValue() {
+                this.numbers.b++;
+            }
+        },
+        //监视的正常写法, 在创建vue实例的时候已经知道了需要监视谁,所以直接在此处写逻辑,
+        watch: {
+            //此处可以监视 正常属性(isHot), 也可以监听 计算属性(info)
+            isHot: {
+                // 初始化时,让 handler 调用一下, 拿到当前的值
+                immediate: true,
+                // 当前isHot发生改变的时候触发
+                handler(newValue, oldValue) {
+                    console.log("isHot-发生了改变")
+                    console.log("新值-" + newValue)
+                    console.log("旧值-", oldValue)
+                }
+            },
+            // 此处是监视对象中的某一个值, 使用原始写法进行监视
+            'numbers.a': {
+                handler(newValue, oldValue) {
+                    console.log("numbers.a-发生了改变")
+                    console.log("新值-" + newValue)
+                    console.log("旧值-", oldValue)
+                }
+            },
+            // 此处是监视对象(多级结构)中的所有值, 只要其中一个值变化, 就认为监视对象发生变化
+            numbers: {
+                // 深度监视属性, 默认是 false , 为true时, 则将监视对象中的所有值.
+                deep: true,
+                handler(newValue, oldValue) {
+                    console.log("numbers-发生了改变")
+                    console.log("新值-" + JSON.stringify(newValue))
+                    console.log("旧值-", JSON.stringify(oldValue))
+                }
+            },
+            //简写形式: 如果当前监测的属性,仅仅用到了 handler 这一个方法,则可以采用此种写法
+            isFlag(newValue, oldValue) {
+                console.log("numbers-发生了改变")
+                console.log("新值-" + JSON.stringify(newValue))
+                console.log("旧值-", JSON.stringify(oldValue))
+            }
+        }
+    })
+
+    // 正常写法: 在创建vue实例的时候,不知道需不需要执行监视, 发现在创建实例之后需要监视, 则采用这种写法.
+    vm.$watch('isHot', {
+        // 初始化时,让 handler 调用一下, 拿到当前的值
+        immediate: true,
+        // 当前isHot发生改变的时候触发
+        handler(newValue, oldValue) {
+            console.log("isHot-发生了改变-vm.$watch")
+            console.log("新值-" + newValue)
+            console.log("旧值-", oldValue)
+        }
+    });
+
+    // 简写形式:
+    vm.$watch('isHot', function (newValue, oldValue) {
+        console.log("isHot-发生了改变")
+        console.log("新值-" + newValue)
+        console.log("旧值-", oldValue)
+    });
+
+</script>
+
+</body>
+</html>
