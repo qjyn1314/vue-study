@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-监听属性-watch VS计算属性-computed</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <h2>监听属性VS计算属性</h2>
+    <h3>区别:</h3>
+    <h4>computed 能完成的功能, watch都可以完成.</h4>
+    <h4>watch能完成的功能,computed不一定能完成. 例如: watch可以进行异步操作</h4>
+    <h3>原则:</h3>
+    <h4>被vue管理的函数, 最好写成普通函数, 这样this的指向才是vm 或 组件实例对象. </h4>
+    <h4>不被vue管理的函数(定时器的回调函数, ajax的回调函数等), 最好写成箭头函数, 这样this的指向才是vm 或 组件实例对象. </h4>
+</div>
+
+<script>
+    // 阻止 vue 在启动的时候生成生产提示
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项
+        el: '#app',
+        data() {
+            return {
+                message: 'vue-监听属性VS计算属性',
+            }
+        }
+    })
+
+</script>
+
+</body>
+</html>
