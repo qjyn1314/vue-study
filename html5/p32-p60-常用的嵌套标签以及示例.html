@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>常用的嵌套标签以及示例</title>
+</head>
+<body>
+<h1>表格标签(重要):</h1>
+<hr>
+<hr>
+表格的主要作用:
+<hr>
+用于显示, 展示数据, 因为它可以让数据显示的非常的规整,可读性非常好. 特别是后台展示数据的时候, 能够熟练运用表格, 就显得尤为重要. 能把数据表现的很有条理
+<hr>
+表格不是用来布局的, 而是用来展示数据的.
+<hr>
+表格的基本语法:
+<hr>
+table 标签 用于定义表格.
+<hr>
+tr 标签 用于定义表格中的行, 必须嵌套在 table 标签中.
+<hr>
+td 标签 用于定义表格中的单元格, 必须嵌套在 tr 标签中.
+<hr>
+th 标签 标识表格的表头部分, 必须嵌套在 tr 标签中. 表头单元格 常用于表格第一行, 突出重要性, 表头单元格里面的问题会加粗居中显示
+<hr>
+thread 标签 表格的头部区域, 位于表格的第一行.
+<hr>
+tbody 标签 表格的主体区域, 用于放数据.
+<hr>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>姓名</th>
+        <th>年龄</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>18</td>
+        <td>张三</td>
+        <td>20</td>
+    </tr>
+    <tr>
+        <td>19</td>
+        <td>李四</td>
+        <td>30</td>
+    </tr>
+    </tbody>
+</table>
+<hr>
+表格属性:
+<hr>
+align : 规定表格相对周围元素的对齐方式. 属性值: left, center, right .
+<hr>
+border : 规定表格单元是否拥有边框,默认为 "", 表示没有边框.
+<hr>
+cellpadding : 规定单元边沿与其内容之间的空白, 默认像素值为 1 .
+<hr>
+cellspacing : 规定单元格之间的空白, 默认像素值为 2 .
+<hr>
+width : 表格的宽度, 属性值: 像素值 或 百分比.
+<hr>
+height : 表格的高度, 属性值: 像素值 或 百分比.
+<hr>
+合并单元格:
+<hr>
+rowspan : 跨行合并单元格, rowspan="合并单元格的个数"
+<hr>
+colspan : 跨列合并单元格, colspan="合并单元格的个数"
+<hr>
+目标单元格(写合并代码的单元格):
+<hr>
+跨行: 最上侧单元格为目标单元格, 写合并代码
+<hr>
+跨列: 最左侧单元格为目标单元格, 写合并代码
+<hr>
+<hr>
+<h1>无序列表:</h1>
+<hr>
+ul: 表示 无序列表, 一般会以项目符号呈现列表项, 而列表项使用 li 标签定义
+<hr>
+ul 标签 中只能嵌套 li 标签, 直接在 ul 标签中输入其他标签 或者 文字的做法是不被允许的.
+<hr>
+li 标签 相当于一个容器, 可以容纳所有元素.
+<hr>
+无序列表会带有自己的样式属性
+<hr>
+<ul>
+    <li>无序列表001</li>
+    <li>无序列表002</li>
+    <li>无序列表003</li>
+</ul>
+<hr>
+<hr>
+<h1>有序列表:</h1>
+<hr>
+与 ul的特点一致.
+<hr>
+<hr>
+<ol>
+    <li>有序列表001</li>
+    <li>有序列表002</li>
+    <li>有序列表003</li>
+</ol>
+<hr>
+<hr>
+<h1>自定义列表:</h1>
+<hr>
+常用于对术语或名词进行解释和描述,定义列表的列表项前没有任何项目符号
+<hr>
+dl 标签用于定义 列表
+<hr>
+dt 标签 定义项目/名字
+<hr>
+dd 标签 描述每一个项目或名字, 与dt 一起使用
+<hr>
+dl 标签中只能包含dt 和 dd
+<hr>
+dt 和 dd 个数没有限制, 通常都是 一个dt对应多个dd
+<hr>
+<dl>
+    <dt>项目001</dt>
+    <dd>项目001的描述</dd>
+    <dt>项目002</dt>
+    <dd>项目002的描述</dd>
+</dl>
+<hr>
+<hr>
+<h1>表单标签:</h1>
+<hr>
+<h3>label标签:</h3>
+<hr>
+label 标签 为input 元素定义标注(标签).
+<hr>
+label 标签用于绑定一个表单元素, 当点击 label 标签内的文本时,浏览器就会自动将焦点(光标)或者选择对应的表单元素上, 用来增加用户的体验.
+<hr>
+核心: label 标签的 for属性 应当与相关元素的id 属性相同.
+<hr>
+示例: 当点击用户名时,即可向文本框中输入内容.  <label for="username">用户名 : </label><input type="text" id="username">
+<hr>
+<h3>表单域</h3>
+<hr>
+完整的表单通常由表单域, 表单控件, 提示信息三部份构成.
+<hr>
+form 标签 用于定义 表单域 , 以实现用户信息的收集和传递.
+<hr>
+form 会把它范围内的表单元素信息提交给服务器.
+<hr>
+属性:
+<hr>
+action : 用于指定接收并处理表单数据的服务器程序的url地址.
+<hr>
+method : 用于设置表单数据的提交方式, 其取值为 get 或 post .
+<hr>
+name : 用于指定表单的名称, 以区分同一个页面总多个表单域
+<hr>
+<h3>表单元素</h3>
+<hr>
+<h5>input 输入框 :</h5>
+<hr>
+name属性: 定义 input 元素的名称. 要求 单选按钮 和 复选框 要有相同的name值.
+<hr>
+value属性: 定义 input 元素的值.
+<hr>
+checked属性: 规定此input元素首次加载时应该被选中. 主要针对于 单选按钮 和 复选框 , 在加载页面时, 默认选中某个表单的值 .
+<hr>
+maxlength属性: 规定输入字段中的字符的最大长度.
+<hr>
+type属性 :
+<hr>
+button : 定义可点击按钮 . 示例 : <input type="button" value="单击按钮">
+<hr>
+checkbox : 定义复选框 . 示例 :
+睡觉: <input type="checkbox" name="hobby" checked="checked">
+吃饭: <input type="checkbox" name="hobby">
+喝水: <input type="checkbox" name="hobby">
+<hr>
+file : 定义输入字段和 "浏览" 按钮, 供文件上传 . 示例 : <input type="file">
+<hr>
+hidden : 定义隐藏输入框 . 示例 : <input type="hidden">
+<hr>
+image : 定义图像形式的提交按钮 . 示例 : <input type="image">
+<hr>
+password : 定义密码输入框,该字段中的字符被掩码 . 示例 : <input type="password">
+<hr>
+radio : 定义单选按钮,可以实现多选一 . 示例 :
+男: <input type="radio" name="sex" checked="checked">
+女: <input type="radio" name="sex">
+未知: <input type="radio" name="sex">
+<hr>
+reset : 定义重置按钮, 重置按钮会清除表单中的所有数据 . 示例 : <input type="reset" value="重置按钮">
+<hr>
+submit : 定义提交按钮, 提交按钮会把表单数据发送到服务器 . 示例 : <input type="submit" value="提交按钮">
+<hr>
+text : 定义单行输入框, 用户可在其中输入文本.默认宽度为 20 个字符. 示例 : <input type="text">
+<hr>
+<hr>
+<h5> select 下拉选择框 :</h5>
+<hr>
+<label>
+    省份:
+    <select>
+        <option>北京</option>
+        <option>天津</option>
+        <option>河南</option>
+    </select>
+</label>
+<hr>
+select 标签中至少需要包含 已对 option
+<hr>
+option 标签中定义 selected = "selected" , 当前项即默认选中项.
+<hr>
+<h5> textarea 文本于输入框 :</h5>
+<hr>
+用于定义多行文本输入的控件.
+<hr>
+个人简介:
+<textarea rows="10" cols="200">
+
+</textarea>
+<hr>
+可以轻松创建多行文本输入框.
+<hr>
+cols属性 : 每行中的字符数
+<hr>
+rows属性 : 显示的行数
+<hr>
+
+</body>
+</html>
