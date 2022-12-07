@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>原生Ajax</title>
     <style>
-        #result{
+        .result {
             width: 200px;
             height: 100px;
             border: solid 2px dodgerblue;
@@ -13,18 +13,83 @@
 </head>
 <body>
 <h1>AJAX GET 请求</h1>
-<h3><button id="ajax-get">点击我发送ajax的原生get请求</button></h3>
+    <button id="ajax-get">点击我发送ajax的原生get请求</button>
 <h5>结果是:</h5>
 <hr/>
-<div id="result"></div>
+<div id="result" class="result"></div>
+<hr/>
+<h1>AJAX POST 请求</h1>
+<button id="ajax-post">点击我发送ajax的原生post请求</button>
+<h5>结果是:</h5>
+<hr/>
+<div id="result-post" class="result"></div>
 <hr/>
 <script>
     //获取 get按钮元素
-    let getBtn = document.getElementById("ajax-get");
+    let getBtn = document.getElementById('ajax-get');
+    let result = document.getElementById('result');
     //点击事件
-    getBtn.click = function (event) {
-        console.log("发送get请求...",event)
+    getBtn.onclick = function () {
+        console.log("发送get请求...")
+        //ajax 请求
+        const xhr = new XMLHttpRequest();
+        // 设置请求方式以及路径
+        xhr.open('GET', 'http://127.0.0.1:8012/server?name=zhangsan&age=18');
+        // 发送请求
+        xhr.send();
+        //xhr.readyState : 0-初始化, 1-open方法调用完毕, 2-send方法调用完毕, 3-服务端部分的结果返回, 4-表示服务端的所有结果都已返回.
+        // 事件绑定 处理服务端返回的结果, 即当 readyState 状态发生改变的时候进行触发并做一些操作.
+        xhr.onreadystatechange = function () {
+            // 表示服务端返回了所有的结果
+            if (xhr.readyState === 4) {
+                // 判断响应码是否正常
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    console.log("状态码-"+xhr.status)
+                    console.log("状态字符串-"+xhr.statusText)
+                    console.log("所有响应头-"+xhr.getAllResponseHeaders())
+                    console.log("响应体-"+xhr.response)
+                    result.innerHTML = xhr.response;
+                }
+            }
+        }
     };
+
+
+    //获取 post按钮元素
+    let postBtn = document.getElementById('ajax-post');
+    let resultPost = document.getElementById('result-post');
+
+    postBtn.onclick = function () {
+        console.log("发送post请求...")
+        //ajax 请求
+        const xhr = new XMLHttpRequest();
+        // 对于ie浏览器中的缓存问题, 可以在请求的url路径后面加上  t=Date.now() 是一个时间戳 ,浏览器会认为请求路径不一致而再次请求服务,解决ie缓存问题.
+        // 设置请求方式以及路径
+        xhr.open('POST', 'http://127.0.0.1:8012/server?name=zhangsan&age=18&t='+Date.now());
+        // 设置请求头:
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+        xhr.setRequestHeader('username','zhangsan')
+        // 发送请求
+        xhr.send("username:zhangsan",);
+        // 设置响应体的数据类型:
+        xhr.responseType = 'json';
+        //xhr.readyState 状态值: 0-初始化, 1-open方法调用完毕, 2-send方法调用完毕, 3-服务端部分的结果返回, 4-表示服务端的所有结果都已返回.
+        // 事件绑定 处理服务端返回的结果, 即当 readyState 状态发生改变的时候进行触发并做一些操作.
+        xhr.onreadystatechange = function () {
+            // 表示服务端返回了所有的结果
+            if (xhr.readyState === 4) {
+                // 判断响应码是否正常
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    console.log("状态码-"+xhr.status)
+                    console.log("状态字符串-"+xhr.statusText)
+                    console.log("所有响应头-"+xhr.getAllResponseHeaders())
+                    console.log("响应体-"+xhr.response)
+                    resultPost.innerHTML = xhr.response.name;
+                }
+            }
+        }
+    };
+
 
 </script>
 <hr/>
