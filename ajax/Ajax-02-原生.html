@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原生Ajax</title>
+    <style>
+        #result{
+            width: 200px;
+            height: 100px;
+            border: solid 2px dodgerblue;
+        }
+    </style>
+</head>
+<body>
+<h1>AJAX GET 请求</h1>
+<h3><button id="ajax-get">点击我发送ajax的原生get请求</button></h3>
+<h5>结果是:</h5>
+<hr/>
+<div id="result"></div>
+<hr/>
+<script>
+    //获取 get按钮元素
+    let getBtn = document.getElementById("ajax-get");
+    //点击事件
+    getBtn.click = function (event) {
+        console.log("发送get请求...",event)
+    };
+
+</script>
+<hr/>
+<hr/>
+</body>
+</html>
