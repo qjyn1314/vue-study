@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Symbol</title>
+</head>
+<body>
+<h1>Symbol</h1>
+<hr/>
+ES6 引入的一种新的原始数据类型 Symbol , 表示是独一无二的值, 他是 JavaScript 的第七种数据类型, 是一种类似于字符串的数据类型.
+<hr/>
+特性:
+<hr/>
+1. Symbol 的值是唯一的, 用来解决命名冲突的问题
+<hr/>
+2. Symbol 值不能与其他数据进行运算.
+<hr/>
+3. Symbol 定义的对象属性不能使用 for..in 循环遍历, 但是可以使用 Symbol.ownKeys 来获取对象的所有键名.
+<hr/>
+<script>
+    // 创建 第一种方式
+    let sym = Symbol();
+    console.log(sym, typeof sym);
+
+    // 创建 第二种方式
+    let sym_school01 = Symbol("尚硅谷");
+    let sym_school02 = Symbol("尚硅谷");
+    console.log(sym_school01);
+    console.log(sym_school02);
+    console.log(sym_school01 === sym_school02);
+
+    // 创建 第三种方式
+    let symbol01 = Symbol.for('尚硅谷');
+    let symbol02 = Symbol.for('尚硅谷');
+    console.log(symbol01, typeof symbol01);
+    console.log(symbol01 === symbol02);
+
+    // usonb 七种数据类型:
+    // u undefined
+    // s string symbol
+    // o object
+    // n null number
+    // b boolean
+
+</script>
+<hr/>
+<hr/>
+<h1>Symbol 创建为对象添加方法</h1>
+<hr/>
+向对象中添加方法: up down
+<hr/>
+<script>
+    let game = {
+        name: '植物大战僵尸',
+        up: function () {
+            console.log('原始的up方法')
+        },
+        down: function () {
+            console.log('原始的down方法')
+        }
+    }
+    let methods = {
+        up: Symbol(),
+        down: Symbol()
+    }
+    //添加第一无二的方法
+    game[methods.up] = function () {
+        console.log('我是由symbol创建的up方法')
+    }
+    game[methods.down] = function () {
+        console.log('我是由symbol创建的down方法')
+    }
+    console.log(game)
+    game.up()
+    game.down()
+
+    let youxi = {
+        name: '狼人杀',
+        [Symbol('say')]: function () {
+            console.log('我是可以发言')
+        },
+        [Symbol('zibao')]: function () {
+            console.log('我是可以自爆')
+        },
+    }
+    console.log(youxi)
+
+</script>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+</body>
+</html>

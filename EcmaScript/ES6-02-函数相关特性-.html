@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ES6-新特性</title>
+    <style>
+        .div {
+            width: 100px;
+            height: 50px;
+            background: chartreuse;
+            border: aqua solid 2px;
+        }
+    </style>
+</head>
+<body>
+<h1>箭头函数</h1>
+<hr/>
+ES6 中允许使用 箭头(=>) 定义函数 , 在原有的基础上省略了 function 关键字.
+<hr/>
+特性:
+<hr/>
+1. this 是静态的, this 始终指向函数声明时所在作用域下的 this 的值.
+<hr/>
+2. 不能作为构造实例化对象.
+<hr/>
+3. 不能使用 arguments 变量
+<hr/>
+4. 箭头函数的简写方式:<br/>
+1).省略小括号, 当形参有且只有一个的时候.<br/>
+2). 省略花括号, 当代码体 只有一条语句的时候, 此时 return 关键字必须省略, 且执行结果就是函数的返回值.<br/>
+<hr/>
+<script>
+    // 声明函数
+    let fun01 = function () {
+        console.log('我是原有声明函数的格式')
+    }
+    // 新特性声明函数
+    let fun02 = (a, b) => {
+        console.log('我是使用箭头定义的函数,省略了 function 关键字. ')
+        return a + b;
+    }
+    // 调用函数
+    let result = fun02(1, 2);
+    console.log(`调用函数的结果是: ${result}`);
+
+    //特性 1
+    function getName001() {
+        console.log(this.name);
+    }
+
+    let getName002 = () => {
+        console.log(this.name);
+    }
+    window.name = '尚硅谷'
+    const sch = {
+        name: 'SHANGGUIGU'
+    }
+    getName001()
+    getName002()
+
+    getName001.call(sch);
+    getName001.call(sch);
+
+    // 特性 4 省略小括号
+    let add = n => {
+        return n + n;
+    }
+    console.log(add(10));
+    // 特性 4 省略花括号
+    let pow = n => n * n;
+    console.log(pow(1024));
+</script>
+<hr/>
+结论:
+<hr/>
+1.箭头函数适合与 this 无关的回调, 定时器, 数组的方法回调.
+<hr/>
+2.箭头函数不适合与 this 有关的回调, 事件回调, 对象的方法,
+<hr/>
+<div class="div" id="div_id"></div>
+<hr/>
+<script>
+    //结论 1 的实践  点击div盒子两秒后变成粉色
+    // 获取元素
+    let div = document.getElementById('div_id');
+    // 绑定事件
+    div.addEventListener('click', function () {
+        // let _this = this;
+        // // 使用普通function 定义定时器的函数 , 需要再次定义 this的指向
+        // setTimeout(function () {
+        //     console.log(this);
+        //     //此时的this指向的是 windows
+        //     _this.style.background = 'pink';
+        // }, 2000)
+        // 使用箭头函数定义定时器的函数, 不需要再次定义 this的指向
+        setTimeout(() => {
+            console.log(this);
+            //此时的this指向的是 函数声明时所在作用域下的this的值
+            this.style.background = 'pink';
+        }, 2000)
+    })
+    // 结论 2 的实践 从数组中返回偶数的元素
+    const arr = [1, 12, 13, 14, 22, 23, 24, 100, 102];
+    // 原有的写法
+    const arrResult01 = arr.filter(function (item) {
+        if (item % 2 === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+    console.log(arrResult01)
+    // 箭头函数的写法
+    const arrResult02 = arr.filter(item => {
+        return item % 2 === 0
+    });
+    const arrResult03 = arr.filter(item => item % 2 === 0);
+    console.log(arrResult02)
+    console.log(arrResult03)
+</script>
+<hr/>
+<hr/>
+<h1>参数默认值</h1>
+<hr/>
+ES6 允许给函数参数赋值初始值
+<hr/>
+特性:
+<hr/>
+1. 形参初始值 具有默认值的参数, 一般位置要靠后(潜规则)
+<hr/>
+2. 与 结构赋值
+<hr/>
+<script>
+    // 特性 1
+    function addMore(a, b, c = 90) {
+        return a + b + c;
+    }
+    console.log(addMore(1, 2))
+    // 特性 2 此处也可以进行赋初始值
+    function connection({url = '127.0.0.1', port, username, password}) {
+        console.log(url)
+        console.log(port)
+        console.log(username)
+        console.log(password)
+    }
+    connection({
+        url: 'http://localhost',
+        username: 'root',
+        password: 'root',
+        port: 3306
+    })
+</script>
+<hr/><hr/>
+<h1>rest参数</h1>
+<hr/>
+ES6 引入rest参数, 用于获取函数的实参, 用来代替 arguments
+<hr/>
+特性: rest参数必须要放到参数的最后面
+<hr/>
+<script>
+    // es5 获取形参的写法
+    function dataEs5() {
+        console.log(arguments);
+    }
+    dataEs5('北京','莫斯科','纽约','东京','首尔')
+
+    // es6 获取形参的写法
+    function dataEs6(a,b,...args) {
+        console.log(a);
+        console.log(b);
+        console.log(args);
+    }
+    dataEs6('阿娇','白芷','思慧','灵芝','花葵')
+</script>
+<hr/><hr/>
+<h1>扩展运算符</h1>
+<hr/>
+ES6 中 扩展运算符能将 [数组] 转换为逗号分隔的 [参数列表]  , 即,可以把数组转换为逗号分隔的序列.
+<hr/>
+<script>
+    //声明一个数组
+    const tfboys =['易烊千玺','王源','王俊凯'];
+    //声明函数
+    function chunwan() {
+        console.log(arguments);
+    }
+    chunwan(tfboys)
+    chunwan(...tfboys)
+</script>
+<hr/>
+扩展运算符示例:
+<hr/>
+1.数组的合并
+<hr/>
+<script>
+    const kuaizi = ['wanglitai','xiaoyang'];
+    const fenghuangchuanqi = ['zengyi','linghua'];
+    // es5 的写法
+    let zuixuanapple = kuaizi.concat(fenghuangchuanqi);
+    console.log(zuixuanapple)
+    // es6 的写法
+    let zuixuanappleEs6 = [...kuaizi,...fenghuangchuanqi]
+    console.log(zuixuanappleEs6)
+ </script>
+<hr/>
+2.数组的克隆
+<hr/>
+<script>
+    // 次数的数组中如果是一个对象, 那么仅仅是一个浅拷贝
+    const sanzhihua = ['E','G','M'];
+    const sanyecao = [...sanzhihua];
+    console.log(sanyecao)
+</script>
+<hr/>
+3.将伪数组转换为真正的数组
+<hr/>
+<script>
+    let nodeListOf = document.querySelectorAll('div');
+    console.log(nodeListOf)
+    let divs = [...nodeListOf];
+    console.log(divs)
+</script>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+</body>
+</html>
