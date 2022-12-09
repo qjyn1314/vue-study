@@ -41,9 +41,7 @@ ES6 引入的一种新的原始数据类型 Symbol , 表示是独一无二的值
     // o object
     // n null number
     // b boolean
-
 </script>
-<hr/>
 <hr/>
 <h1>Symbol 创建为对象添加方法</h1>
 <hr/>
@@ -60,20 +58,19 @@ ES6 引入的一种新的原始数据类型 Symbol , 表示是独一无二的值
         }
     }
     let methods = {
-        up: Symbol(),
-        down: Symbol()
+        up02: Symbol(),
+        down02: Symbol()
     }
     //添加第一无二的方法
-    game[methods.up] = function () {
+    game[methods.up02] = function () {
         console.log('我是由symbol创建的up方法')
     }
-    game[methods.down] = function () {
+    game[methods.down02] = function () {
         console.log('我是由symbol创建的down方法')
     }
     console.log(game)
     game.up()
     game.down()
-
     let youxi = {
         name: '狼人杀',
         [Symbol('say')]: function () {
@@ -84,14 +81,19 @@ ES6 引入的一种新的原始数据类型 Symbol , 表示是独一无二的值
         },
     }
     console.log(youxi)
-
 </script>
 <hr/>
+<h1>Symbol 的内置值</h1>
 <hr/>
+Symbol.hasInstance : 当对象使用 instanceof 运算符, 判断是否为该对象的实例时, 会调用这个方法.
 <hr/>
+Symbol.iterator : 对象进行for...in 循环时, 会调用 Symbol.iterator 方法, 返回该对象的默认遍历器.
 <hr/>
+Symbol.toPrimitive : 该对象被转为原始类型的值时, 会调用这个方法, 返回该对象的原始类型值.
 <hr/>
+Symbol.toStringTag : 在该对象上调用toString方法时, 返回该方法的返回值.
 <hr/>
+Symbol.species : 创建衍生对象时,会使用到该属性.
 <hr/>
 <hr/>
 <hr/>

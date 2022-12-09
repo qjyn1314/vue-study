@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise</title>
+</head>
+<body>
+<h1>Promise 介绍</h1>
+<hr/>
+引入的异步编程的新解决方案, 语法上 Promise 是一个构造函数.
+<hr/>
+用来封装异步操作并可以获取其成功或失败的结果.
+<hr/>
+Promise 构造函数: Promise(escutor){}
+<hr/>
+Promise.protype.then 方法, 当 成功的时候, 调用 实例对象的此方法
+<hr/>
+Promise.protype.catch 方法
+<hr/>
+<script>
+    // 实例化 Promise 对象,
+    // 对象一共有三种 状态, 初始, 成功, 失败
+    const p = new Promise((resolve, reject) => {
+        console.log(resolve)
+        console.log(reject)
+        setTimeout(() => {
+            // let data = '数据库中的用户数据';
+            // // 调用完 resolve 函数之后, Promise 的状态就会变成 成功
+            // console.log("调用成功-执行函数 resolve , 并更改 Promise 实例对象的状态为成功.")
+            // resolve(data);
+
+            let error = '数据库中的错误用户数据';
+            console.log("调用失败-执行函数 reject ,并更改 Promise 实例对象的状态为失败.")
+            reject(error);
+
+        }, 1000);
+    });
+
+    //当 Promise 对象 状态为成功时, 调用的 then方法的第一个函数
+    //当 Promise 对象 状态为失败时, 调用的 then方法的第二个函数
+    // 如果同时调用了 resolve函数和 reject函数 则仅仅执行 then方法的第一个函数
+    p.then((value) => {
+        console.log("成功的值是-" + value)
+    }, (reason) => {
+        console.error('失败的值是-' + reason)
+    })
+</script>
+<hr/>
+<h1>Promise 封装读取文件</h1>
+<hr/>
+请查看 fs_server.js
+<hr/>
+<h1>Promise 封装 AJAX 请求</h1>
+<hr/>
+<script>
+
+    const p01 = new Promise((resolve, reject) => {
+
+        //ajax 请求
+        const xhr = new XMLHttpRequest();
+        // 设置请求方式以及路径
+        xhr.open('GET', 'http://127.0.0.1:8012/server?name=zhangsan&age=18');
+        // 发送请求
+        xhr.send();
+        //xhr.readyState : 0-初始化, 1-open方法调用完毕, 2-send方法调用完毕, 3-服务端部分的结果返回, 4-表示服务端的所有结果都已返回.
+        // 事件绑定 处理服务端返回的结果, 即当 readyState 状态发生改变的时候进行触发并做一些操作.
+        xhr.onreadystatechange = function () {
+            // 表示服务端返回了所有的结果
+            if (xhr.readyState === 4) {
+                // 判断响应码是否正常
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    console.log("状态码-" + xhr.status)
+                    console.log("状态字符串-" + xhr.statusText)
+                    console.log("所有响应头-" + xhr.getAllResponseHeaders())
+                    console.log("响应体-" + xhr.response)
+                    resolve(xhr.response)
+                } else {
+                    reject(xhr.response);
+                }
+            }
+        }
+
+    });
+
+    p01.then((value) => {
+        console.log("成功的值是-" + value)
+    }, (reason) => {
+        console.error('失败的值是-' + reason)
+    })
+
+</script>
+<hr/>
+<h1>Promise.protype.then 方法</h1>
+<hr/>
+then 方法的返回结果是 Promise 对象, 对象的状态 由回调函数的执行结果决定.
+<hr/>
+1.如果回调函数中的返回结果是非 Promise 类型的属性, 状态将为成功(关键重点), 返回值为对象的成功的值
+<hr/>
+2.回调返回值是 重新 new 出来的 Promise 对象, 状态将由新的 Promise 对象决定
+<hr/>
+3.回调返回值将直接抛出异常, 状态也是完成了, 因为返回值是 非 Promise 对象.
+<hr/>
+结论: 就是 then 方法可以进行链式调用,  三级联动可以通过此处来减少 ajax的多级嵌套问题.
+<hr/>
+链式调用, 因为 then方法返回的是 Promise 对象, 仅仅是成功或失败的状态区别.即 PromiseState 的值 是 成功的, 还是失败的.
+<hr/>
+<script>
+    const p02 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let data = '数据库中的用户数据';
+            // 调用完 resolve 函数之后, Promise 的状态就会变成 成功
+            console.log("调用成功-执行函数 resolve , 并更改 Promise 实例对象的状态为成功.")
+            resolve(data);
+
+            // let error = '数据库中的错误用户数据';
+            // console.log("调用失败-执行函数 reject ,并更改 Promise 实例对象的状态为失败.")
+            // reject(error);
+
+        }, 1000);
+    })
+
+    const result002 = p02.then((value) => {
+        console.log("成功的值是-" + value)
+        // 1.返回不是 Promise 对象的值, 此时 返回的 Promise 对象的状态是成功的.
+        return 123;
+        // 2. 是 Promise 对象, 这个时候将根据返回的Promise 对象 状态来决定 是否是成功状态.
+        // return new Promise((resolve, reject)=>{
+        //     resolve('ok');
+        // });
+        // 3. 抛出异常
+        // throw new Error("出错了.");
+    })
+    console.log('result002的结果是',result002)
+
+    // 结论链式调用, 因为 then方法返回的是 Promise 对象, 仅仅是成功或失败的状态区别.
+
+
+
+
+
+
+</script>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+</body>
+</html>

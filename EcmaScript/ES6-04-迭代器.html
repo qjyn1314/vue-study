@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>迭代器</title>
+</head>
+<body>
+<h1>迭代器</h1>
+<hr/>
+迭代器是一种接口, 为各种不同的的数据结构提供统一的访问机制, 任何数据结构只要部署 iterator 接口, 就可以完成遍历操作.
+<hr/>
+ES6 创建了一种新的遍历命令, for...of 循环, iterator 接口 主要提供 for...of 消费.
+<hr/>
+原生具备iterator接口的数据类型(可以使用 for...of 语句): Array, Arguments, Set, Map, String, TypeArray, NodeList
+<hr/>
+<script>
+    const xiyouArr = ['唐僧', '孙悟空', '猪八戒', '沙僧'];
+    console.log(xiyouArr)
+    //in 写法迭代数组, 将打印数组的下标值.
+    for (let value in xiyouArr) {
+        console.log(value);
+    }
+    //of 写法迭代数组, 将打印数组中的值. 内部有 Symbol.iterator 的属性, 就能使用of 进行遍历
+    for (let value of xiyouArr) {
+        console.log(value);
+    }
+    // 使用  Symbol.iterator
+    let xiyouValue = xiyouArr[Symbol.iterator]();
+    console.log(xiyouValue.next());
+    console.log(xiyouValue.next());
+    console.log(xiyouValue.next());
+    console.log(xiyouValue.next());
+    console.log(xiyouValue.next());
+    console.log(xiyouValue.next().done);
+    console.log(xiyouValue.next().value);
+    console.log(xiyouValue.next().done);
+    console.log(xiyouValue.next().done);
+
+</script>
+<hr/>
+工作原理:
+<hr/>
+1. 创建一个指针对象, 指向当前数据结构的起始位置
+<hr/>
+2. 第一次调用对象的next 方法, 指针自动指向数据结构的第一个成员
+<hr/>
+3. 接下来不断的调用next方法, 指针一直往后移动, 直到指向最后一个成员
+<hr/>
+4. 每调用next 方法, 返回一个包含value 和done 属性的对象. done为true时, 是超出了下标, 数据值为 undefined
+<hr/>
+注意: 需要自定义遍历数据的时候, 要想到迭代器.
+<hr/>
+<h1>自定义遍历数据</h1>
+<hr/>
+其实就是在对象中声明 Symbol.iterator , 对此方法进行重写,自定义要输出哪个参数.
+<hr/>
+<script>
+    // 定义一个对象,
+    const banji = {
+        name: "终极一班",
+        student: [
+            '张三',
+            '李四',
+            '王五',
+            '赵六',
+            '钱七',
+            '周八'
+        ],
+        [Symbol.iterator]() {
+            let index = 0;
+            return {
+                next: () => {
+                    if (index < this.student.length) {
+                        const result = {
+                            value: this.student[index],
+                            done: false
+                        }
+                        index++;
+                        return result;
+                    } else {
+                        return {
+                            value: undefined,
+                            done: true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //遍历班级对象
+    for (let banjiKey in banji) {
+        console.log(banjiKey)
+    }
+    // banji.student 使用for of 遍历, 打印 对象中数组中的成员
+    //遍历班级对象 重写 Symbol.iterator
+    for (let banjiKey of banji) {
+        console.log(banjiKey)
+    }
+</script>
+<hr/>
+</body>
+</html>

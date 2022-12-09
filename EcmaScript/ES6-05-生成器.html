@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生成器</title>
+</head>
+<body>
+<h1>生成器</h1>
+<hr/>
+生成器函数是 ES6 提供的一种异步编程解决方案, 语法行为与传统函数完全不同.
+<hr/>
+1. 一个特殊的函数.
+<hr/>
+2. 生成器是为 异步编程, 纯回调函数的解决方案.
+<hr/>
+<script>
+    // 声明生成器函数
+    function* gen() {
+        yield '一直没有耳朵'
+        // console.log("我是一个特殊的生成器函数. ")
+        yield '一直没有尾巴'
+        // console.log("第二行的输出")
+        yield '真奇怪'
+        // console.log("第三行的输出")
+    }
+
+    let helloWord = gen();
+    console.log(helloWord)
+
+    //调用 生成器函数,执行内部的处理逻辑
+    let next = helloWord.next();
+    console.log(next)
+    console.log(helloWord.next())
+    // 每调用一次, 将调用到 yield 声明数据处
+    console.log(helloWord.next())
+    console.log(helloWord.next())
+    // for...of遍历函数
+    for (let v of gen()) {
+        //值是 yield 定义的数据
+        console.log(v)
+    }
+</script>
+<hr/>
+<h1>生成器函数参数</h1>
+<hr/>
+在每一次调用的时候, 将执行 yield 111 返回后的结果, 可以为参数传递做准备.
+<hr/>
+<script>
+    //声明 生成器函数
+    function* genStudy(args) {
+        console.log(args)
+        let one = yield 111;
+        console.log(one)
+        let two = yield 222;
+        console.log(two)
+        let three = yield 333;
+        console.log(three)
+    }
+
+    // 执行获取迭代器对象
+    let iterator = genStudy('AAA');
+    console.log(iterator.next());
+    // next 方法可以传入实参, 此处的入参将作为 yield 111 的结果.
+    console.log(iterator.next('BBB'));
+    console.log(iterator.next('CCC'));
+    console.log(iterator.next('DDD'));
+    console.log(iterator.next('EEE'));
+</script>
+<hr/>
+<h1>生成器函数实例-定时器-演示异步编程</h1>
+<hr/>
+<script>
+    // 异步编程 文件操作,文件夹操作, 网络操作(ajax,request)
+    // 定时器 演示 生成器函数的示例:
+    // 需求 :
+    // 1s后 控制台输出 111
+    // 2s后 控制台输出 222
+    // 3s后 控制台输出 333
+
+    function one() {
+        setTimeout(() => {
+            console.log(111)
+            iterator001.next()
+        }, 1000);
+    }
+
+    function two() {
+        setTimeout(() => {
+            console.log(222)
+            iterator001.next()
+        }, 2000);
+    }
+
+    function three() {
+        setTimeout(() => {
+            console.log(333)
+            iterator001.next()
+        }, 3000);
+    }
+
+    // 生成器函数
+    function* genSetTimeOut() {
+        yield one();
+        yield two();
+        yield three();
+    }
+
+    let iterator001 = genSetTimeOut();
+
+    let next1 = iterator001.next();
+    console.log(next1);
+</script>
+<hr/>
+<h1>模拟 依次获取 用户数据 订单数据 商品数据 示例</h1>
+<hr/>
+<script>
+    function getUsers() {
+        setTimeout(() => {
+            console.log('getUsers')
+            let data = '用户数据';
+            iterator002.next(data)
+        }, 1000);
+    }
+
+    function getOrders() {
+        setTimeout(() => {
+            console.log('getOrders')
+            let data = '订单数据';
+            iterator002.next(data)
+        }, 1000);
+    }
+
+    function getGoods() {
+        setTimeout(() => {
+            console.log('getGoods')
+            let data = '商品数据';
+            iterator002.next(data)
+        }, 1000);
+    }
+    // 依次声明函数
+    function* getDemo02() {
+        let users = yield getUsers();
+        console.log(users);
+        let orders = yield getOrders();
+        console.log(orders);
+        let goods = yield getGoods();
+        console.log(goods);
+    }
+
+    let iterator002 = getDemo02();
+
+    let next2 = iterator002.next();
+
+
+
+
+
+</script>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+</body>
+</html>
