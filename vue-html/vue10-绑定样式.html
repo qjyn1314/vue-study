@@ -7,7 +7,7 @@
     <style>
         .basic {
             width: 300px;
-            height: 400px;
+            height: 100px;
             border: black solid 2px;
         }
 
@@ -18,12 +18,48 @@
         .blueBackground {
             background: blue;
         }
+
+        .redFont {
+            font-style: revert;
+        }
+
     </style>
 </head>
 <body>
 
 <div id="root">
+    <h1>绑定class样式</h1>
+    <hr/>
+    语法 :class="css样式"
+    <hr/>
+    1. 字符串写法, 适用于: 样式的类名不确定, 需要动态指定.
+    <hr/>
+    2. 数组写法, 适用于: 要绑定的样式个数不确定, 名字也不确定.
+    <hr/>
+    3. 对象写法, 适用于要绑定的样式个数确定, 名字也确定, 但要动态决定用不用.
+    <hr/>
+    <!--绑定class样式, 字符串写法, 适用于: 样式的类名不确定-->
     <div class="basic" :class="a" @click="changeStyle">{{name}}</div>
+    <hr/>
+    <hr/>
+    <!--数组写法, 适用于: 要绑定的样式个数不确定, 名字也不确定.-->
+    <div class="basic" :class="classArr" @click="changeStyle">{{name}}</div>
+    <hr/>
+    <hr/>
+    <!--对象写法, 适用于要绑定的样式个数确定, 名字也确定, 但要动态决定用不用.-->
+    <div class="basic" :class="classObj" @click="changeStyle">{{name}}</div>
+    <hr/>
+    <hr/>
+    <h1>绑定style样式</h1>
+    <hr/>
+    1. 对象写法--  :style="{fontSize : xxx}", 其中的 xxx 是动态值.
+    <hr/>
+    2. 数组写法--  :style="[{fontSize : xxx},{color: 'red'}]",其中数组中是绑定样式的对象.
+    <hr/>
+    <!--对象写法-->
+    <div class="basic" :style="styleObj" @click="changeStyle">{{name}}</div>
+    <hr/>
+
 </div>
 
 <script>
@@ -36,10 +72,21 @@
         data: {
             name: '绑定样式的操作',
             a: 'blueBackground',
+            classArr: ['blueBackground'],
+            classObj: {
+                redBackground: true,
+                blueBackground: false
+            },
+            styleObj: {
+                fontSize: '40px',
+                color: 'red',
+                backgroundColor: 'pink'
+            },
         },
         methods: {
             changeStyle() {
                 this.a = 'redBackground'
+                this.classArr = ['redBackground', 'redFont']
             }
         }
     })
