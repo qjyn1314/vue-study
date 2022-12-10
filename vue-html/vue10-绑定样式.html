@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue绑定样式</title>
+    <script src="../vue-js/vue.js"></script>
+    <style>
+        .basic {
+            width: 300px;
+            height: 400px;
+            border: black solid 2px;
+        }
+
+        .redBackground {
+            background: red;
+        }
+
+        .blueBackground {
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root">
+    <div class="basic" :class="a" @click="changeStyle">{{name}}</div>
+</div>
+
+<script>
+    // 阻止 vue 在启动的时候生成生产提示
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项
+        el: '#root',
+        data: {
+            name: '绑定样式的操作',
+            a: 'blueBackground',
+        },
+        methods: {
+            changeStyle() {
+                this.a = 'redBackground'
+            }
+        }
+    })
+</script>
+</body>
+
+</html>

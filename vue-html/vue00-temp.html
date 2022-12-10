@@ -17,12 +17,10 @@
     Vue.config.productionTip = false;
     // let 变量； const 常量；
     const vm = new Vue({
-        // 选项
+        // 选项--关键 用于标识要更改哪个元素中的数据
         el: '#app',
-        data() {
-            return {
-                message: 'Vue Hello World!!!',
-            }
+        data: {
+            message: 'Vue Hello World!!!',
         }
     })
 </script>
