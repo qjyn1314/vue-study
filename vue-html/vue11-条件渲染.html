@@ -8,8 +8,12 @@
 <body>
 
 <div id="app">
-    <h1>{{ message }}</h1>
-    <p>电气与信息学院</p>
+    <h1>v-show 做条件渲染</h1>
+    <hr/>
+    <h1>v-if 做条件渲染</h1>
+    <hr/>
+    <h1 v-show="false">{{ message }}</h1>
+    <hr/>
 </div>
 
 <script>
@@ -20,7 +24,8 @@
         // 选项--关键 用于标识要更改哪个元素中的数据
         el: '#app',
         data: {
-            message: 'Vue Hello World!!!',
+            message: 'Vue 条件渲染',
+
         }
     })
 </script>
