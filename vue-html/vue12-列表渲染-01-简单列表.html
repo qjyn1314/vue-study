@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-列表渲染-简单列表</title>
+    <script src="../vue-js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <h1>v-for 指令</h1>
+    <hr/>
+    用于展示列表数据
+    <hr/>
+    语法: v-for="(item,index) of dataList" :key="item.id"
+    <hr/>
+    可以遍历 数组, 对象, 字符串, 指定的次数.
+    <hr/>
+    <h3>遍历数组</h3>
+    <ul>
+        <li v-for="(item,index) of dataList" :key="item.id">
+            下标-{{index}}-ID-{{item.id}}-姓名-{{item.name}}---年龄-{{item.age}}---性别-{{item.sex === 1 ? '男' : '女'}}
+        </li>
+    </ul>
+    <h3>遍历对象</h3>
+    <ul>
+        <li v-for="(item,index) of dataObj" :key="index">
+            下标-{{index}}-值-{{item}}
+        </li>
+    </ul>
+    <h3>遍历字符串(用得少)</h3>
+    <ul>
+        <li v-for="(item,index) of dataStr" :key="index">
+            下标-{{index}}-值-{{item}}
+        </li>
+    </ul>
+    <h3>遍历指定次数(用得少)</h3>
+    <ul>
+        <li v-for="(item,index) of dataNum" :key="index">
+            下标-{{index}}-值-{{item}}
+        </li>
+    </ul>
+</div>
+
+<script>
+    // 阻止 vue 在启动的时候生成生产提示
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项--关键 用于标识要更改哪个元素中的数据
+        el: '#app',
+        data: {
+            message: '列表渲染',
+            dataList: [
+                {
+                    id: "001",
+                    name: "张三",
+                    age: 18,
+                    sex: 1,
+                },
+                {
+                    id: "002",
+                    name: "李四",
+                    age: 30,
+                    sex: 0,
+                },
+                {
+                    id: "003",
+                    name: "王五",
+                    age: 20,
+                    sex: 1,
+                },
+            ],
+            dataObj: {
+                name: "别克自动驾驶001",
+                color: "red",
+                price: "7.8万"
+            },
+            dataStr: "Vue 列表渲染之遍历字符串",
+            dataNum: 20
+        }
+    })
+</script>
+
+</body>
+</html>

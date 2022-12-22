@@ -2,6 +2,8 @@
 ### 视频教程- [尚硅谷Vue2.0+Vue3.0全套教程丨vuejs从入门到精通 ](https://www.bilibili.com/video/BV1Zy4y1K7SH)
 ### 视频教程中使用的是vue2, 后续章节中有vue3。
 
+### [vue官网](https://cn.vuejs.org/guide/quick-start.html)
+
 #### 2022.11.14 p22 完成观看和学习
 #### 2022.11.15 p24 完成观看和学习
 #### 2022.11.17 p25 完成观看和学习
