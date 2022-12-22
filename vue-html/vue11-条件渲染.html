@@ -10,13 +10,34 @@
 <div id="app">
     <h1>v-show 做条件渲染</h1>
     <hr/>
-    <h1>v-if 做条件渲染</h1>
-    <hr/>
     <h1 v-show="false">{{ message }}</h1>
     <hr/>
-    <h1>{{ message }}</h1>
+    用法说明:
+    <hr/>
+    使用 v-show 时, 当前页面中的元素还是存在, 是在 元素的style样式中 增加了 display:none; 的属性, 让其隐藏 .
+    <hr/>
+    一般在当前 判断元素变化频率很高的时候, 一般使用 v-show , 这样仅仅是对 样式做了修改, 更快, 节省资源.
+    <hr/>
+    <h1>v-if 做条件渲染</h1>
+    <hr/>
+    用法说明:
+    <hr/>
+    使用 v-if 时, 当前页面中的元素就直接被删除掉了, 直接操作 dom , 将页面中的元素直接删除.
+    <hr/>
+    一般在当前 判断元素变化频率不是很高的时候, 一般使用 v-if , 这样 操作的次数少, 可以提升效率.
+    <hr/>
+    <h1 v-if="false">{{ message }}</h1>
+    <hr/>
     <h2>当前num的值:{{ num }}</h2>
     <button @click="numAdd()">点我+1</button>
+    <hr/>
+    此处的 if else 是一组判断, 只要其中一个判断符合条件, 则不再执行剩余的判断.
+    <hr/>
+    <div v-if="num === 1">num=1,则展示我</div>
+    <div v-else-if="num === 2">num=2,则展示我</div>
+    <div v-else-if="num === 3">num=3,则展示我</div>
+    <div v-else>都不符合判断, 则展示我</div>
+    <hr/>
 </div>
 
 <script>
@@ -28,10 +49,10 @@
         el: '#app',
         data: {
             message: 'Vue Hello World!!!',
-            num: 20
+            num: 0
         },
-        methods:{
-            numAdd(){
+        methods: {
+            numAdd() {
                 this.num++;
             }
         }
