@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>vue-列表渲染-列表过滤</title>
+    <title>vue-列表渲染-过滤和排序</title>
     <script src="../vue-js/vue.js"></script>
 </head>
 <body>
@@ -20,7 +20,16 @@
     <label>
         <input type="text" v-model="keyWordByComputed" placeholder="请输入姓名-Computed实现">
     </label>
-        <ul>
+    <ul>
+        <li v-for="(item,index) of computedFilterDataList" :key="item.id">
+            下标-{{index}}-ID-{{item.id}}-姓名-{{item.name}}---年龄-{{item.age}}---性别-{{item.sex === 1 ? '男' : '女'}}
+        </li>
+    </ul>
+    <h2>排序</h2>
+    <button @click="ageAsc()">年龄升序</button>
+    <button @click="ageDesc()">年龄降续</button>
+    <button @click="ageDefault()">年龄原顺序</button>
+    <ul>
         <li v-for="(item,index) of computedFilterDataList" :key="item.id">
             下标-{{index}}-ID-{{item.id}}-姓名-{{item.name}}---年龄-{{item.age}}---性别-{{item.sex === 1 ? '男' : '女'}}
         </li>
@@ -38,6 +47,8 @@
             message: '列表渲染-列表过滤',
             keyWordByWatch: '',
             keyWordByComputed: '',
+            // 0 代表原顺序, 1 升序, 2 降序
+            sortType: 0,
             dataList: [
                 {
                     id: "001",
@@ -67,16 +78,33 @@
             watchFilterDataList: [],
         },
         methods: {
-            search() {
-                console.log("点击了搜索按钮一次.")
+            ageAsc() {
+                console.log("ageAsc.")
+                this.sortType = 1;
+            },
+            ageDesc() {
+                console.log("ageDesc.")
+                this.sortType = 2;
+            },
+            ageDefault() {
+                console.log("ageDefault.")
+                this.sortType = 0;
             }
         },
-        computed:{
+        computed: {
             computedFilterDataList() {
-                return this.dataList.filter((item) => {
+                // filter 会产生 新的数组
+                const resList = this.dataList.filter((item) => {
                     // 将返回匹配条件的数据
                     return item.name.indexOf(this.keyWordByComputed) !== -1;
                 })
+                if (this.sortType) {
+                    // sort 不会产生新的数组, 将对原数组进行排序.
+                    resList.sort((keyE, keyC) => {
+                        return this.sortType === 1 ? keyE.age - keyC.age : keyC.age - keyE.age;
+                    })
+                }
+                return resList;
             }
         },
         watch: {
