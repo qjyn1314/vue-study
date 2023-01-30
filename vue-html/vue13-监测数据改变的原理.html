@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-监测数据改变的原理</title>
+    <script src="../vue-js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <h2>vm.data = vm._data</h2>
+    <hr/>
+    <hr/>
+    <hr/>
+</div>
+
+<script>
+    // 阻止 vue 在启动的时候生成生产提示
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项--关键 用于标识要更改哪个元素中的数据
+        el: '#app',
+        data: {
+            message: '监测数据改变的原理',
+        }
+    })
+    // 模拟数据监测
+    let data = {
+        name: '尚硅谷',
+        address: '北京'
+    }
+    // 创建一个监视的实例对象,用于监视data中属性的变化
+    const obs = new Observer(data);
+    console.log(obs)
+
+    // 准备vm实例
+    vm._data = data = obs;
+    // 监测数据对象的改变的最简单实践.
+    function Observer(obj) {
+        //汇总对象中的所有字段形成一个数组
+        const objKeys = Object.keys(obj);
+        //遍历对象中的所有key
+        objKeys.forEach((k) => {
+            Object.defineProperty(this, k, {
+                get() {
+                    return obj[k];
+                },
+                set(newVal) {
+                    console.log(`${k}` + "被改变了, 我要去解析模板了,生成虚拟dom....作对比, 开始忙了.")
+                    obj[k] = newVal;
+                }
+            })
+        })
+    }
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-初体验</title>
+    <script src="../vue-js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <h3 v-if="student.name">学生姓名:{{ student.name }}</h3>
+    <h4><button @click="addSex">添加一个名字</button></h4>
+</div>
+
+<script>
+    // 阻止 vue 在启动的时候生成生产提示
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项--关键 用于标识要更改哪个元素中的数据
+        el: '#app',
+        data: {
+            message: 'Vue Hello World!!!',
+            student: {
+
+            }
+        },
+        methods: {
+            addSex() {
+                Vue.set(this.student, 'name', '张三');
+                // this.$set(this.student, 'sex', '男');
+            }
+        }
+    })
+
+
+</script>
+
+</body>
+</html>
