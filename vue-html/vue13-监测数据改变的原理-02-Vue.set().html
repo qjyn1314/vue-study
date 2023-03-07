@@ -10,6 +10,7 @@
 <div id="app">
     <h1>{{ message }}</h1>
     <h3 v-if="student.name">学生姓名:{{ student.name }}</h3>
+    <h3 v-if="student.sex">学生性别:{{ student.sex }}</h3>
     <h4><button @click="addSex">添加一个名字</button></h4>
 </div>
 
@@ -28,8 +29,10 @@
         },
         methods: {
             addSex() {
+                // 此处方法只能给 data中已有的字段进行重新设置值. 对于第一个参数 target, 不允许是 vm, 不允许是 除含data以外的参数值.必须是 data中已有的字段
                 Vue.set(this.student, 'name', '张三');
-                // this.$set(this.student, 'sex', '男');
+                // 此处方法是有局限性: 
+                this.$set(this.student, 'sex', '男');
             }
         }
     })
