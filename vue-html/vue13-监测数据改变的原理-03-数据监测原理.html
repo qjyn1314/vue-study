@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>vue-监测数据改变的原理-数组中变化原理</title>
+    <title>vue-监测数据改变的原理-数组监测原理</title>
     <script src="../vue-js/vue.js"></script>
 </head>
 <body>
@@ -29,7 +29,10 @@
     // 模拟数据监测
     let data = {
         name: '尚硅谷',
-        address: '北京'
+        address: '北京',
+        // 如果数组想要被 vm 监听其是否被修改, 则需要调用数组的相关方法, 例如 push, splice , pop , 这些方法都是被 vue做了一层封装. 
+        // 第一步是 调用原生的 arrays数组的方法, 第二步是 调用虚拟dom的数据, 重新编译模板, 生成dom数据页面, 得到页面的更新. 
+        hobby:['打游戏','看电影','读书']
     }
     // 创建一个监视的实例对象,用于监视data中属性的变化
     const obs = new Observer(data);
