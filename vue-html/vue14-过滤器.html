@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-过滤器</title>
+    <script src="../vue-js/vue.js"></script>
+    <script src="../vue-js/dayjs.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <hr/>
+    js好用的工具网站:
+    <hr/>
+    <a href="https://www.bootcdn.cn/">BootCDN -> https://www.bootcdn.cn/</a>
+    <hr/>
+    moment js 时间日期处理器-重量级
+    <hr/>
+    dayjs js 时间日期处理器-轻量
+    <hr/>
+    两个处理器的api是一致的. 此处使用 dayjs
+    <hr/>
+    <h2>computed->Date-yyyy-MM-dd->{{nowDate}}</h2>
+    <hr/>
+    <h2>computed->Date-yyyy-MM-dd HH:mm:ss->{{nowDateTime}}</h2>
+    <hr/>
+    <h2>methods->Date-yyyy-MM-dd HH:mm:ss->{{getFormatDate()}}</h2>
+    <hr/>
+    <h2>filters->Date-yyyy-MM-dd HH:mm:ss->{{Date.now() | timeFormat}}</h2>
+    <hr/>
+    <h2>filters-传参->Date-yyyy-MM-dd->{{Date.now() | timeFormat('YYYY-MM-DD') | spliceFour}}</h2>
+    <hr/>
+    <hr/>
+    <h2>过滤器-总结</h2>
+    <hr/>
+    定义: 对要显示的数据进行特定格式化后再显示( 适用于一些简单逻辑的处理 )
+    <hr/>
+    语法:
+    <hr/>
+    1.注册过滤器: Vue.filter("name", callback) 或者 new Vue(filters:{})
+    <hr/>
+    2.使用过滤器: {{xxx | 过滤器名称}} 或 v-bind:属性 = "xxx | 过滤器名称"
+    <hr/>
+    备注:
+    <hr/>
+    1. 过滤器也可接受额外参数,多个过滤器也可以串联
+    <hr/>
+    2. 并没有改变原本的数据, 是产生新的对应的数据
+    <hr/>
+    <hr/>
+</div>
+
+
+<script>
+    // 阻止 vue 在启动的时候生成生产提示
+    Vue.config.productionTip = false;
+
+    Vue.filter("spliceFour", function (value) {
+        return value.splice(0, 4);
+    })
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项--关键 用于标识要更改哪个元素中的数据
+        el: '#app',
+        data: {
+            message: 'vue-过滤器',
+            // nowDate: '',
+            // nowDateTime: ''
+        },
+        methods: {
+            getFormatDate() {
+                return dayjs(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+            }
+        },
+        computed: {
+            nowDate() {
+                return dayjs(Date.now()).format("YYYY-MM-DD");
+            },
+            nowDateTime() {
+                return dayjs(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+            }
+        },
+        //局部的过滤器
+        filters: {
+            timeFormat(value, format = "YYYY-MM-DD HH:mm:ss") {
+                return dayjs(value).format(format);
+            },
+            timeFormatSplice(value) {
+                return value.splice(0, 4);
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

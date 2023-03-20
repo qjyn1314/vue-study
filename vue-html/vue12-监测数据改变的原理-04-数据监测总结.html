@@ -11,17 +11,41 @@
     <h1>{{ message }}</h1>
     <h2>vm.data = vm._data</h2>
     <hr/>
-<h1>总结:</h1>
-<hr/>
-<h2>总结:</h2>
+    <h1>总结:</h1>
     <hr/>
+    <h3>1. vue 会监视data中所有层次的数据.</h3>
     <hr/>
+    <h3>2. 如何监测对象中的数据?</h3>
     <hr/>
+    通过setter 实现监控, 且要在 new Vue时就要传入要监测的数据.
     <hr/>
+    1) 对象中后追加的属性, vue中默认不做响应式处理
     <hr/>
+    2) 如需要给后追加的属性做响应式, 请使用如下api :
     <hr/>
-    
+    Vue.set(target,propertyName/index,value)
     <hr/>
+    vm.$set(target,propertyName/index,value)
+    <hr/>
+    <h3>如何监测数组中的数据?</h3>
+    <hr/>
+    通过包裹数组更新元素的方法实现, 本质就是做了两件事:
+    <hr/>
+    1) 调用原生数组对应的方法对数组进行更新
+    <hr/>
+    2) 重新解析模板, 进而更新页面
+    <hr/>
+    <h3>在vue中修改数组中的某个元素时, 一定要用如下方法:</h3>
+    <hr/>
+    1) 数组api: push(), pop(), shift(), unshift(), splice(), sort(), reverse(),
+    <hr/>
+    2) Vue.set()  或者 vm.$set()
+    <hr/>
+    <h1>特别注意: Vue.set() 和 vm.$set() 不能给 vm 或 vm 的根数据对象 添加属性. </h1>
+    <hr/>
+    数据劫持:
+    <hr/>
+
 </div>
 
 <script>
@@ -41,7 +65,7 @@
         address: '北京',
         // 如果数组想要被 vm 监听其是否被修改, 则需要调用数组的相关方法, 例如 push, splice , pop , 这些方法都是被 vue做了一层封装. 
         // 第一步是 调用原生的 arrays数组的方法, 第二步是 调用虚拟dom的数据, 重新编译模板, 生成dom数据页面, 得到页面的更新. 
-        hobby:['打游戏','看电影','读书']
+        hobby: ['打游戏', '看电影', '读书']
     }
     // 创建一个监视的实例对象,用于监视data中属性的变化
     const obs = new Observer(data);
@@ -49,6 +73,7 @@
 
     // 准备vm实例
     vm._data = data = obs;
+
     // 监测数据对象的改变的最简单实践.
     function Observer(obj) {
         //汇总对象中的所有字段形成一个数组

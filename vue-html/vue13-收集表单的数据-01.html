@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-收集表单数据</title>
+    <script src="../vue-js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <form @submit.prevent="subForm">
+        账号: <input type="text" v-model.trim="account"><br><br>
+        密码: <input type="password" v-model="password"><br><br>
+        年龄: <input type="number" v-model.number="age"><br><br>
+        性别:
+        男<input type="radio" name="sex" v-model="sex" value="男">
+        女<input type="radio" name="sex" v-model="sex" value="女"><br><br>
+        爱好:
+        学习<input type="checkbox" v-model="hobby" value="学习">
+        打游戏<input type="checkbox" v-model="hobby" value="打游戏">
+        撸代码<input type="checkbox" v-model="hobby" value="撸代码"><br><br>
+        所属校区:
+        <select v-model="city">
+            <option>请选择校区</option>
+            <option value="beijing">北京</option>
+            <option value="shanghai">上海</option>
+        </select>
+        <br><br>
+        其他信息: <textarea v-model.lazy="other"></textarea> <br><br>
+        <input type="checkbox" v-model="agree"> 阅读并接受 用户协议
+        <br><br>
+        <button>提交数据</button>
+    </form>
+
+    <h1>总结</h1>
+    <hr/>
+    <h3>收集表单数据:</h3>
+    <hr/>
+    若: input type="text" , 则 v-model 收集的是value的值, 用户输入的就是value的值.
+    <hr/>
+    若: input type="radio" , 则 v-model 收集的是value的值, 且要给标签配置value值.
+    <hr/>
+    若: input type="checkbox"
+    <hr/>
+    1.没有配置input的value属性, 那么收集的就是 checked (勾选 或 未勾选, 是布尔值)
+    <hr/>
+    2.配置input的value属性,
+    <hr/>
+    1) v-model 的初始化是非数组, 那么收集的就是 checked (勾选 或 未勾选, 是布尔值)
+    <hr/>
+    2) v-model 的初始化是数组, 那么收集的就是value组成的数组
+    <hr/>
+    <h5>备注:</h5>
+    <hr/>
+    v-model的三个修饰符:
+    <hr/>
+    lazy: 失去焦点再收集数据
+    <hr/>
+    number: 输入字符串转为有效的数字
+    <hr/>
+    trim: 清除输入的首尾空格
+    <hr/>
+</div>
+
+<script>
+    // 阻止 vue 在启动的时候生成生产提示
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项--关键 用于标识要更改哪个元素中的数据
+        el: '#app',
+        data: {
+            message: 'vue-收集表单数据',
+            account: '',
+            password: '',
+            age: '',
+            sex: '',
+            hobby: [],
+            city: '',
+            other: '',
+            agree: ''
+        },
+        methods: {
+            subForm() {
+                console.log(JSON.stringify(this._data))
+                console.log(this._data)
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
