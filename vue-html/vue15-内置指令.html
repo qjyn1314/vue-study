@@ -9,6 +9,86 @@
 
 <div id="app">
     <h1>{{ message }}</h1>
+    <h3>指令复习:</h3>
+    <hr/>
+    v-bind : 单向绑定解析表达式, 可简写为 xxx
+    <hr/>
+    v-model : 双向数据绑定
+    <hr/>
+    v-for : 遍历数组/对象/字符串
+    <hr/>
+    v-on : 绑定时间监听, 可简写为 @
+    <hr/>
+    v-if : 条件渲染 ( 动态控制节点是否存在)
+    <hr/>
+    v-else : 条件渲染 ( 动态控制节点是否存在)
+    <hr/>
+    v-show : 条件渲染 ( 动态控制节点是否展示)
+    <hr/>
+    <h3>v-text</h3>
+    <hr/>
+    <div>默认使用插值语法示例: {{message}}</div>
+    <hr/>
+    此处使用 v-text 示例: <br/><br/>
+    <div v-text="message"></div>
+    <hr/>
+    1.作用: 向其所在的结点中渲染文本内容.
+    <hr/>
+    2.与插值语法的区别: v-text 会替换掉结点中的内容, {{xx}} 不会.
+    <hr/>
+    <h3>v-html</h3>
+    <hr/>
+    <div>默认使用插值语法示例: {{ caseStr }}</div>
+    <hr/>
+    此处使用 v-html 示例: <br/><br/>
+    <div v-html="caseStr"></div>
+    <hr/>
+    1.作用: 向指定节点中渲染包含html结构的内容
+    <hr/>
+    2.与插值语法的区别:
+    <hr/>
+    1) v-html 会替换掉 结点中所有内容, {{xx}} 则不会.
+    <hr/>
+    2) v-html 可以识别html结构.
+    <hr/>
+    3.严重注意: v-html有安全性问题
+    <hr/>
+    1) 在网站上动态渲染任意html是非常危险的, 容易导致 xss 攻击.
+    <hr/>
+    2) 一定要在可信的内容上使用 v-html , 永远不要用在用户提交的内容上.
+    <hr/>
+    <h3>v-cloak</h3>
+    <hr/>
+    <div>默认使用插值语法示例: {{ caseStr }}</div>
+    <hr/>
+    此处使用 v-cloak 示例: <br/><br/>
+    <div v-cloak>{{caseStr}}</div>
+    <hr/>
+
+    <hr/>
+
+    <hr/>
+
+    <hr/>
+
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <h3></h3>
+    <hr/>
+    <h3></h3>
+    <hr/>
+    <h3></h3>
+    <hr/>
+    <h3></h3>
+    <hr/>
+    <h3></h3>
+    <hr/>
 </div>
 
 <script>
@@ -20,6 +100,7 @@
         el: '#app',
         data: {
             message: 'Vue 内置指令..',
+            caseStr: '<h2> Hello World !!! </h2>'
         }
     })
 </script>
