@@ -27,10 +27,10 @@
     <hr/>
     <h3>v-text</h3>
     <hr/>
-    <div>默认使用插值语法示例: {{message}}</div>
+    <div>默认使用插值语法示例: {{caseStr}}</div>
     <hr/>
     此处使用 v-text 示例: <br/><br/>
-    <div v-text="message"></div>
+    <div v-text="caseStr"></div>
     <hr/>
     1.作用: 向其所在的结点中渲染文本内容.
     <hr/>
@@ -64,13 +64,42 @@
     此处使用 v-cloak 示例: <br/><br/>
     <div v-cloak>{{caseStr}}</div>
     <hr/>
-
+    v-cloak 在 vue 接管页面的瞬间, 将会 删除 v-cloak 标签. 主要是为了保证 网速过慢页面延迟加载了 当前 vue.js ,
+    此时页面上不允许出现 插入值语句, 需要使用 v-vloak进行进行隐藏(display:none;)
     <hr/>
-
+    v-cloak 指令:
     <hr/>
-
+    1. 本质上是个特殊的指令, vue示例创建完毕并接管容器后, 会删掉 v-cloak 属性.
     <hr/>
-
+    2. 使用css配合v-cloak可以解决网速慢时,页面展示出 插值语法 {{xxxxx}} 的问题.
+    <hr/>
+    <h3>v-once</h3>
+    <hr/>
+    此处使用 v-once 示例: <br/><br/>
+    <h2 v-once>初始化的n值是:{{n}}</h2>
+    <hr/>
+    <h2>当前的n值是:{{n}}</h2>
+    <button @click="n++">点我n+1</button>
+    <hr/>
+    v-once 指令:
+    <hr/>
+    1. v-once所在的节点在初次动态渲染后, 就视为静态内容了
+    <hr/>
+    2. 以后的数据改变不会引起v-once所在结构的更新, 可以用于优化性能
+    <hr/>
+    <h3>v-pre</h3>
+    <hr/>
+    此处使用 v-pre 示例: <br/><br/>
+    <h2 v-pre>初始化的m值是:{{m}}</h2>
+    <hr/>
+    <h2>当前的n值是:{{m}}</h2>
+    <button @click="m++">点我m+1</button>
+    <hr/>
+    v-once 指令:
+    <hr/>
+    1. vue 跳过其所在节点的编译过程.
+    <hr/>
+    2.可利用它跳过: 没有使用指令语法. 没有使用插值语法的结点. 会加快编译
     <hr/>
     <hr/>
     <hr/>
@@ -78,16 +107,6 @@
     <hr/>
     <hr/>
     <hr/>
-    <hr/>
-    <h3></h3>
-    <hr/>
-    <h3></h3>
-    <hr/>
-    <h3></h3>
-    <hr/>
-    <h3></h3>
-    <hr/>
-    <h3></h3>
     <hr/>
 </div>
 
@@ -100,7 +119,9 @@
         el: '#app',
         data: {
             message: 'Vue 内置指令..',
-            caseStr: '<h2> Hello World !!! </h2>'
+            caseStr: '<h2> Hello World !!! </h2>',
+            n: 1,
+            m: 1
         }
     })
 </script>
