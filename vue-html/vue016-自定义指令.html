@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-自定义指令</title>
+    <script src="../vue-js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ message }}</h1>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+    <hr/>
+</div>
+
+<script>
+    // 阻止 vue 在启动的时候生成生产提示
+    Vue.config.productionTip = false;
+    // let 变量； const 常量；
+    const vm = new Vue({
+        // 选项--关键 用于标识要更改哪个元素中的数据
+        el: '#app',
+        data: {
+            message: '自定义指令...',
+        }
+    })
+</script>
+
+</body>
+</html>
